@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'your-credentials-id', url: 'https://github.com/MarMarcz/python-calculator.git'
+                git branch: 'main', url: 'https://github.com/MarMarcz/python-calculator.git'
             }
         }
         stage('Run tests') {
