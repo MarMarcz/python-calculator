@@ -7,14 +7,13 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/MarMarcz/python-calculator.git'
             }
         }
-        stage('Install Python') {
+        stage('Install Dependencies') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'sudo apt-get update'
-                        sh 'sudo apt-get install -y python3 python3-venv'
+                        sh 'apt-get update && apt-get install -y python3-venv || true'
                     } else {
-                        error "Python installation steps for non-Unix systems are not defined."
+                        error "Installation steps for non-Unix systems are not defined."
                     }
                 }
             }
@@ -22,13 +21,12 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 sh 'python3 -m venv venv'
-                sh '. venv/bin/activate'
-                sh 'pip install --upgrade pip'
+                sh 'venv/bin/pip install --upgrade pip'
             }
         }
         stage('Run tests') {
             steps {
-                sh '. venv/bin/activate && python -m unittest discover'
+                sh 'venv/bin/python -m unittest discover'
             }
         }
     }
