@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.9'
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -9,7 +13,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                sh 'python3 -m unittest test_calculator.py'
+                sh 'python -m unittest test_calculator.py'
             }
         }
     }
